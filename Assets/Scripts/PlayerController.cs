@@ -9,47 +9,69 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float vertical;
     Animator animator;
-    Rigidbody2D rigidbody2d;
+    private Rigidbody2D rigidbody2d;
     Vector2 lookDirection = new Vector2(1, 0);
     public float speed = 5;
-    // Start is called before the first frame update
-    void Start()
+    private float _movementDirection;
+    public GameObject _projectileprefab;
+    public Transform projectilePosition;
+    private bool _facingright = true;
+
+    private void Awake()
     {
         animator = GetComponent<Animator>();
-        rigidbody2d = GetComponent<Rigidbody2D>();
+        rigidbody2d = transform.GetComponent<Rigidbody2D>();
+    }
+    void Start()
+    {
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
-    }
-
-    private void FixedUpdate()
-    {
+        Jump();
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Vector2 position = rigidbody2d.position;
-            position.x = position.x + speed * horizontal * Time.deltaTime;
-            position.y = position.y + speed * vertical * Time.deltaTime;
-
-            rigidbody2d.MovePosition(position);
+            shoot();
         }
+
     }
     void Movement()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        _movementDirection = Input.GetAxis("Horizontal");
 
-        Vector2 move = new Vector2(horizontal, vertical);
+        rigidbody2d.velocity = new Vector2(_movementDirection * speed, rigidbody2d.velocity.y);
 
-        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+        if (_movementDirection > 0 && !_facingright)
         {
-            lookDirection.Set(move.x, move.y);
-            lookDirection.Normalize();
+            characterDirection();
         }
+        else if (_movementDirection < 0 && _facingright)
+        {
+            characterDirection();
+        }
+    }
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            float jumpVelocity = 10f;
+            rigidbody2d.velocity = new Vector2(0, jumpVelocity);
+        }
+    }
+    void shoot()
+    {
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Instantiate(_projectileprefab, projectilePosition.position, projectilePosition.rotation);
+            //audio source play
+        }
+    }
 
-        animator.SetFloat("Look X", lookDirection.x);
-        animator.SetFloat("Look Y", lookDirection.y);
-        animator.SetFloat("Speed", move.magnitude);
+    private void characterDirection()
+    {
+        _facingright = !_facingright;
+        transform.Rotate(0f, 180f, 0f);
     }
 }
