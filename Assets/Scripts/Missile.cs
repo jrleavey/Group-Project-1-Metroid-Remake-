@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Missile : MonoBehaviour
 {
-    public float _speed = 8.0f;
+    public float _speed = 6.0f;
     private Rigidbody2D rigidbody;
 
     private void Awake()
@@ -14,11 +14,10 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         rigidbody.velocity = transform.right * _speed;
-        StartCoroutine(projectileTimeOut());
     }
     void Update()
     {
- 
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -32,11 +31,5 @@ public class Projectile : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-
-    IEnumerator projectileTimeOut()
-    {
-        yield return new WaitForSeconds(1.5f);
-        Destroy(this.gameObject);
     }
 }

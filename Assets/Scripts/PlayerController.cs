@@ -14,8 +14,17 @@ public class PlayerController : MonoBehaviour
     public float speed = 5;
     private float _movementDirection;
     public GameObject _projectileprefab;
+    public GameObject _missilePrefab;
     public Transform projectilePosition;
     private bool _facingright = true;
+    private bool _canJump = true;
+    private bool _canGrapple = true;
+    public float _currentHealth = 99f;
+    public float _maxHealth = 99f;
+    public bool _hasPickedUpGrapple = false;
+    public bool _isMissileActive = false;
+    public float _missileCount = 10f;
+    
 
     private void Awake()
     {
@@ -33,7 +42,15 @@ public class PlayerController : MonoBehaviour
         Jump();
         if (Input.GetKeyDown(KeyCode.F))
         {
-            shoot();
+            Shoot();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == false)
+        {
+            _isMissileActive = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == true)
+        {
+            _isMissileActive = false;
         }
 
     }
@@ -54,18 +71,36 @@ public class PlayerController : MonoBehaviour
     }
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && _canJump == true)
         {
             float jumpVelocity = 10f;
             rigidbody2d.velocity = new Vector2(0, jumpVelocity);
+            _canJump = false;
+            StartCoroutine(jumpTimer());
         }
     }
-    void shoot()
+    void Shoot()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.F) && _isMissileActive == false)
         {
             Instantiate(_projectileprefab, projectilePosition.position, projectilePosition.rotation);
-            //audio source play
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.F) && _isMissileActive == true && _missileCount > 0)
+        {
+            Instantiate(_missilePrefab, projectilePosition.position, projectilePosition.rotation);
+            _missileCount -= 1;
+
+        }
+    }
+    void Grapple()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && _canGrapple == true && _hasPickedUpGrapple == true)
+        {
+            // fire grapple thing
+            _canGrapple = false;
+            StartCoroutine(grappleTimer());
+
         }
     }
 
@@ -73,5 +108,36 @@ public class PlayerController : MonoBehaviour
     {
         _facingright = !_facingright;
         transform.Rotate(0f, 180f, 0f);
+    }
+    IEnumerator jumpTimer()
+    {
+        yield return new WaitForSeconds(1f);
+        _canJump = true;
+    }
+    IEnumerator grappleTimer()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _canGrapple = true;
+    }
+
+    public void Healing()
+    {
+        
+        _currentHealth += 10f;
+
+        if (_currentHealth >= _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+        }
+    }
+
+    public void Damage()
+    {
+        _currentHealth -= 10f;
+    }
+
+    public void pickedUpGrapple()
+    {
+        _hasPickedUpGrapple = true;
     }
 }
