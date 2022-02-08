@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody2d;
     private Rigidbody2D rigidbody2dt;
     private CapsuleCollider2D capsuleCollider;
-    private SpriteRenderer spriteRenderer;
+    private CircleCollider2D circleCollider;
     Vector2 lookDirection = new Vector2(1, 0);
     public float speed = 5;
     private float _movementDirection;
@@ -27,15 +27,17 @@ public class PlayerController : MonoBehaviour
     public bool _hasPickedUpGrapple = false;
     public bool _isMissileActive = false;
     public float _missileCount = 10f;
-    public GameObject _morphBall;
-    private GameObject _playerController;
     public GameObject _CinemachineCamera1;
     public GameObject _CinemachineCamera2;
-    private SpriteRenderer _mbSpriteRenderer;
-    private Rigidbody2D _mbRigidBody2d;
-    private CircleCollider2D _mbCircleCollider2d;
     public Text healthText;
     public Text missileText;
+    public bool _isInMorphBall = false;
+    public bool _canMorphBall = true;
+    public GameObject _defaultCharacter;
+    public GameObject _morphBall;
+    private SpriteRenderer _defaultRenderer;
+    private SpriteRenderer _morphBallRenderer;
+
 
 
     private void Awake()
@@ -43,13 +45,10 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidbody2dt = transform.GetComponent<Rigidbody2D>();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        _mbSpriteRenderer = _morphBall.GetComponent<SpriteRenderer>();
-        _mbRigidBody2d = _morphBall.GetComponent<Rigidbody2D>();
-        _mbCircleCollider2d = _morphBall.GetComponent<CircleCollider2D>();
-        
-
+        capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
+        circleCollider = GetComponentInChildren<CircleCollider2D>();
+        _defaultRenderer = _defaultCharacter.GetComponent<SpriteRenderer>();
+        _morphBallRenderer = _morphBall.GetComponent<SpriteRenderer>();
     }
     void Start()
     {
@@ -131,18 +130,27 @@ public class PlayerController : MonoBehaviour
     }
     void MorphBall()
     {
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V) && _isInMorphBall == false && _canMorphBall == true)
         {
-            spriteRenderer.enabled = false;
-            rigidbody2d.isKinematic = true;
+            circleCollider.enabled = true;
             capsuleCollider.enabled = false;
-            _mbSpriteRenderer.enabled = true;
-            _mbRigidBody2d.isKinematic = false;
-            _mbCircleCollider2d.enabled = true;
-            _CinemachineCamera1.SetActive(false);
-            _CinemachineCamera2.SetActive(true);
-            _morphBall.GetComponent<MorphBall>().enabled = true;
-            this.enabled = false;
+            _isInMorphBall = true;
+            _canMorphBall = false;
+            _defaultRenderer.enabled = false;
+            _morphBallRenderer.enabled = true;
+            StartCoroutine(MorphBallDelay());
+
+        }
+        else if (Input.GetKeyDown(KeyCode.V) && _isInMorphBall == true && _canMorphBall == true)
+        {
+            capsuleCollider.enabled = true;
+            circleCollider.enabled = false;
+            _isInMorphBall = false;
+            _canMorphBall = false;
+            _defaultRenderer.enabled = true;
+            _morphBallRenderer.enabled = false;
+            StartCoroutine(MorphBallDelay());
+
         }
     }
 
@@ -181,5 +189,10 @@ public class PlayerController : MonoBehaviour
     public void pickedUpGrapple()
     {
         _hasPickedUpGrapple = true;
+    }
+    IEnumerator MorphBallDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        _canMorphBall = true;
     }
 }
