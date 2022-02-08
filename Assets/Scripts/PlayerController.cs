@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     float vertical;
     Animator animator;
     private Rigidbody2D rigidbody2d;
+    private Rigidbody2D rigidbody2dt;
+    private CapsuleCollider2D capsuleCollider;
+    private SpriteRenderer spriteRenderer;
     Vector2 lookDirection = new Vector2(1, 0);
     public float speed = 5;
     private float _movementDirection;
@@ -24,12 +27,27 @@ public class PlayerController : MonoBehaviour
     public bool _hasPickedUpGrapple = false;
     public bool _isMissileActive = false;
     public float _missileCount = 10f;
-    
+    public GameObject _morphBall;
+    private GameObject _playerController;
+    public GameObject _CinemachineCamera1;
+    public GameObject _CinemachineCamera2;
+    private SpriteRenderer _mbSpriteRenderer;
+    private Rigidbody2D _mbRigidBody2d;
+    private CircleCollider2D _mbCircleCollider2d;
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        rigidbody2d = transform.GetComponent<Rigidbody2D>();
+        rigidbody2dt = transform.GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        _mbSpriteRenderer = _morphBall.GetComponent<SpriteRenderer>();
+        _mbRigidBody2d = _morphBall.GetComponent<Rigidbody2D>();
+        _mbCircleCollider2d = _morphBall.GetComponent<CircleCollider2D>();
+        
+
     }
     void Start()
     {
@@ -37,7 +55,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         Movement();
         Jump();
         if (Input.GetKeyDown(KeyCode.F))
@@ -52,13 +70,15 @@ public class PlayerController : MonoBehaviour
         {
             _isMissileActive = false;
         }
+        MorphBall();
+        _morphBall.transform.position = this.transform.position;
 
     }
     void Movement()
     {
         _movementDirection = Input.GetAxis("Horizontal");
 
-        rigidbody2d.velocity = new Vector2(_movementDirection * speed, rigidbody2d.velocity.y);
+        rigidbody2dt.velocity = new Vector2(_movementDirection * speed, rigidbody2dt.velocity.y);
 
         if (_movementDirection > 0 && !_facingright)
         {
@@ -73,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && _canJump == true)
         {
-            float jumpVelocity = 10f;
+            float jumpVelocity = 15f;
             rigidbody2d.velocity = new Vector2(0, jumpVelocity);
             _canJump = false;
             StartCoroutine(jumpTimer());
@@ -101,6 +121,22 @@ public class PlayerController : MonoBehaviour
             _canGrapple = false;
             StartCoroutine(grappleTimer());
 
+        }
+    }
+    void MorphBall()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            spriteRenderer.enabled = false;
+            rigidbody2d.isKinematic = true;
+            capsuleCollider.enabled = false;
+            _mbSpriteRenderer.enabled = true;
+            _mbRigidBody2d.isKinematic = false;
+            _mbCircleCollider2d.enabled = true;
+            _CinemachineCamera1.SetActive(false);
+            _CinemachineCamera2.SetActive(true);
+            _morphBall.GetComponent<MorphBall>().enabled = true;
+            this.enabled = false;
         }
     }
 
