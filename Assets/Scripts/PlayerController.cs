@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _mbSpriteRenderer;
     private Rigidbody2D _mbRigidBody2d;
     private CircleCollider2D _mbCircleCollider2d;
+    public Text healthText;
+    public Text missileText;
 
 
     private void Awake()
@@ -56,6 +58,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     { 
+        
+        healthText.text = "" + _currentHealth;
+        missileText.text = "MISSILES " + _missileCount;
+        
         Movement();
         Jump();
         if (Input.GetKeyDown(KeyCode.F))

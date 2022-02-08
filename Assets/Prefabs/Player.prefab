@@ -262,7 +262,7 @@ MonoBehaviour:
   _projectileprefab: {fileID: 4903835897211076397, guid: decd83edf0d36c044897bf971f89b7fa, type: 3}
   _missilePrefab: {fileID: 6578905966025488136, guid: ca165a249a93b084984a4260edbcef6c, type: 3}
   projectilePosition: {fileID: 6315444272417649989}
-  _currentHealth: 99
+  _currentHealth: 30
   _maxHealth: 99
   _hasPickedUpGrapple: 0
   _isMissileActive: 0
@@ -270,6 +270,7 @@ MonoBehaviour:
   _morphBall: {fileID: 842411619}
   _CinemachineCamera1: {fileID: 0}
   _CinemachineCamera2: {fileID: 0}
+  healthText: {fileID: 0}
 --- !u!70 &9118600218697130500
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -279,12 +280,12 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 6315444271173978130}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f69cd8299ce220148ab5955068d73e05, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.92, y: 1.92}
+  m_Offset: {x: -0.000000059604645, y: 0.03369701}
+  m_Size: {x: 0.76082385, y: 1.852606}
   m_Direction: 0
 --- !u!1 &6315444272417649990
 GameObject:
