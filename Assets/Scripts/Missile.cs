@@ -27,7 +27,7 @@ public class Missile : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
-        if (other.tag == "Wall")
+        if (other.tag == "Ground")
         {
             Destroy(this.gameObject);
         }

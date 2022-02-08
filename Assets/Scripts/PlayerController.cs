@@ -180,6 +180,10 @@ public class PlayerController : MonoBehaviour
             _currentHealth = _maxHealth;
         }
     }
+    public void ReplenishMissile()
+    {
+        _missileCount += 10f;
+    }    
 
     public void Damage()
     {

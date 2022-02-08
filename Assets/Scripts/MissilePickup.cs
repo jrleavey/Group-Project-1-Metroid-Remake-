@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class MissilePickup : MonoBehaviour
 {
-    public GameObject _healthDrop;
     private GameObject _player;
     private void Awake()
     {
@@ -12,23 +11,26 @@ public class EnemyBehavior : MonoBehaviour
     }
     void Start()
     {
-        
+        StartCoroutine(healthDecayTime());
     }
+
+
     void Update()
     {
         
-    }
-
-    private void OnDestroy()
-    {
-        Instantiate(_healthDrop, transform.position, Quaternion.identity);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
-            _player.GetComponent<PlayerController>().Damage();
+            _player.GetComponent<PlayerController>().ReplenishMissile();
+            Destroy(this.gameObject);
         }
+    }
+    IEnumerator healthDecayTime()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(this.gameObject);
     }
 }
