@@ -6,6 +6,7 @@ public class Missile : MonoBehaviour
 {
     public float _speed = 6.0f;
     private Rigidbody2D rigidbody;
+    public GameObject _enemy;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class Missile : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            _enemy.GetComponent<EnemyPatrol>().TakeMissileDamage();
             Destroy(this.gameObject);
         }
         if (other.tag == "Ground")

@@ -6,10 +6,12 @@ public class Projectile : MonoBehaviour
 {
     public float _speed = 8.0f;
     private Rigidbody2D rigidbody;
+    public GameObject _enemy;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        _enemy = GameObject.Find("Enemy");
     }
     private void Start()
     {
@@ -25,7 +27,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            _enemy.GetComponent<EnemyPatrol>().TakeDamage();
             Destroy(this.gameObject);
         }
         if (other.tag == "Ground")

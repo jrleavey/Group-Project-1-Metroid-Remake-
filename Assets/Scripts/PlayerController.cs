@@ -37,6 +37,14 @@ public class PlayerController : MonoBehaviour
     public GameObject _morphBall;
     private SpriteRenderer _defaultRenderer;
     private SpriteRenderer _morphBallRenderer;
+    public AudioClip _pickupHealth;
+    public AudioClip _pickupMissiles;
+    public AudioClip _pickupGrapple;
+    public AudioClip _swapMissiles;
+    public AudioClip _shootProjectile;
+    public AudioClip _shootMissile;
+    public GameObject _uiManager;
+
 
 
 
@@ -67,15 +75,9 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == false)
-        {
-            _isMissileActive = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == true)
-        {
-            _isMissileActive = false;
-        }
+
         MorphBall();
+        Swap();
         _morphBall.transform.position = this.transform.position;
 
     }
@@ -108,14 +110,29 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F) && _isMissileActive == false)
         {
+            AudioSource.PlayClipAtPoint(_shootProjectile, transform.position);
             Instantiate(_projectileprefab, projectilePosition.position, projectilePosition.rotation);
             
         }
         else if (Input.GetKeyDown(KeyCode.F) && _isMissileActive == true && _missileCount > 0)
         {
+            AudioSource.PlayClipAtPoint(_shootMissile, transform.position);
             Instantiate(_missilePrefab, projectilePosition.position, projectilePosition.rotation);
             _missileCount -= 1;
 
+        }
+        }
+    void Swap()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == false)
+        {
+            AudioSource.PlayClipAtPoint(_swapMissiles, transform.position);
+            _isMissileActive = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == true)
+        {
+            AudioSource.PlayClipAtPoint(_swapMissiles, transform.position);
+            _isMissileActive = false;
         }
     }
     void Grapple()
@@ -172,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     public void Healing()
     {
-        
+        AudioSource.PlayClipAtPoint(_pickupHealth, transform.position);
         _currentHealth += 10f;
 
         if (_currentHealth >= _maxHealth)
@@ -182,6 +199,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ReplenishMissile()
     {
+        AudioSource.PlayClipAtPoint(_pickupMissiles, transform.position);
         _missileCount += 10f;
     }    
 
@@ -192,11 +210,17 @@ public class PlayerController : MonoBehaviour
 
     public void pickedUpGrapple()
     {
+        AudioSource.PlayClipAtPoint(_pickupGrapple, transform.position);
         _hasPickedUpGrapple = true;
+    }
+    public void PlayerDeath()
+    {
+        
     }
     IEnumerator MorphBallDelay()
     {
         yield return new WaitForSeconds(1f);
         _canMorphBall = true;
     }
+
 }

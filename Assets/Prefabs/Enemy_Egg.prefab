@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3869570903133727699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.016, y: -0.699, z: 0}
+  m_LocalPosition: {x: 1.016, y: -1.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6843780573392386578}
@@ -190,6 +190,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _wallChecker: {fileID: 620083229827172161}
+  _health: 30
+  _enemyDamage: {fileID: 8300000, guid: 0bdbbfe4ff5a7614e8215aae849ea01c, type: 3}
 --- !u!50 &3603319770757927113
 Rigidbody2D:
   serializedVersion: 4
@@ -221,7 +223,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.07938576, y: 0.008426309}

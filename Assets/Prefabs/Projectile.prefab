@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 430446962911441297}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,8 +119,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.0000002, y: 2.0000005}
+  m_Offset: {x: 0.001932025, y: 0.008118331}
+  m_Size: {x: 0.6020063, y: 0.6020063}
   m_Direction: 0
 --- !u!114 &430446962911441297
 MonoBehaviour:
@@ -135,3 +135,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 8
+  _enemy: {fileID: 0}

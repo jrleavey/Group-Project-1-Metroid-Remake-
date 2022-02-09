@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Grapple : MonoBehaviour
 {
-    private GameObject _player;
+    public GameObject _player;
     private void Awake()
     {
-        _player = GameObject.FindWithTag("Player");
         _player.GetComponent<PlayerController>();
     }
     void Start()

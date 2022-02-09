@@ -14,6 +14,9 @@ public class EnemyPatrol : MonoBehaviour
     public bool _turnAround;
     public LayerMask _ground;
     public Collider2D _wallChecker;
+    public float _health = 30;
+    public AudioClip _enemyDamage;
+    
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
@@ -55,6 +58,14 @@ public class EnemyPatrol : MonoBehaviour
         _onPatrol = true;
     }
 
+   public void TakeDamage()
+    {
+        _health -= 5;
+    } public void TakeMissileDamage()
+    {
+        _health -= 30;
+    }
+
     private void OnDestroy()
     {
         Instantiate(_healthDrop, transform.position, Quaternion.identity);
@@ -67,6 +78,16 @@ public class EnemyPatrol : MonoBehaviour
         if (other.tag == "Player")
         {
             _player.GetComponent<PlayerController>().Damage();
+        }
+        if (other.tag == "Attack")
+        {
+            TakeDamage();
+            AudioSource.PlayClipAtPoint(_enemyDamage, transform.position);
+
+            if (_health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
