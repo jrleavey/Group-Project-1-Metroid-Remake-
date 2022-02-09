@@ -24,6 +24,7 @@ public class HealthPickup : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Debug.Log("Collected");
             _player.GetComponent<PlayerController>().Healing();
             Destroy(this.gameObject);
         }
