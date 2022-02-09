@@ -73,7 +73,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+<<<<<<< HEAD:Assets/Prefabs/Health_Pickup.prefab
   m_Sprite: {fileID: 21300000, guid: f75e48b6f69011e4c8bd76b128468685, type: 3}
+=======
+  m_Sprite: {fileID: 21300000, guid: 92e74593f7d04854b95677940fb8fa87, type: 3}
+>>>>>>> 115a502e2a736c4f4cf6bafea1b606a027e81731:Assets/Prefabs/Health_Pickup(PLACEHOLDER).prefab
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

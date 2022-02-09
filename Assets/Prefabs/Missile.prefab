@@ -74,7 +74,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+<<<<<<< HEAD:Assets/Prefabs/Missile.prefab
   m_Sprite: {fileID: 21300000, guid: 5a2bfb800be05aa4e810a84ed54471c3, type: 3}
+=======
+  m_Sprite: {fileID: 21300000, guid: d86e125107de83b4eb397338ba8ec6b5, type: 3}
+>>>>>>> 115a502e2a736c4f4cf6bafea1b606a027e81731:Assets/Prefabs/Missile (PLACEHOLDER).prefab
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
