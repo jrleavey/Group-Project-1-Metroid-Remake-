@@ -13,11 +13,12 @@ public class EnemyPatrol : MonoBehaviour
     public Transform _checkGround;
     public bool _turnAround;
     public LayerMask _ground;
+    public Collider2D _wallChecker;
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
-        patrolSpeed = 8f;
+        patrolSpeed = 3f;
     }
     void Start()
     {
@@ -40,7 +41,7 @@ public class EnemyPatrol : MonoBehaviour
     }
     void patrol()
     {
-        if (_turnAround)
+        if (_turnAround || _wallChecker.IsTouchingLayers(_ground))
         {
             reverse();
         }
