@@ -6,12 +6,12 @@ public class Projectile : MonoBehaviour
 {
     public float _speed = 8.0f;
     private Rigidbody2D rigidbody;
-    public GameObject _enemy;
+    private GameObject _enemy;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        _enemy = GameObject.Find("Enemy");
+        _enemy = GameObject.FindWithTag("Enemy");
     }
     private void Start()
     {
@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
     }
     void Update()
     {
- 
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

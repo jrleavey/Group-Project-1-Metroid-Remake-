@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -44,6 +45,11 @@ public class PlayerController : MonoBehaviour
     public AudioClip _shootProjectile;
     public AudioClip _shootMissile;
     public GameObject _uiManager;
+    public bool _canStandUp = true;
+    private BoxCollider2D _ceilingChecker;
+    public GameObject _tileMap;
+    private TilemapCollider2D _tileMapCollider;
+    public LayerMask _ground;
 
 
 
@@ -57,6 +63,9 @@ public class PlayerController : MonoBehaviour
         circleCollider = GetComponentInChildren<CircleCollider2D>();
         _defaultRenderer = _defaultCharacter.GetComponent<SpriteRenderer>();
         _morphBallRenderer = _morphBall.GetComponent<SpriteRenderer>();
+        _ceilingChecker = GetComponentInChildren<BoxCollider2D>();
+        _tileMapCollider = GetComponent<TilemapCollider2D>();
+        
     }
     void Start()
     {
@@ -151,6 +160,7 @@ public class PlayerController : MonoBehaviour
         {
             circleCollider.enabled = true;
             capsuleCollider.enabled = false;
+            _ceilingChecker.enabled = true;
             _isInMorphBall = true;
             _canMorphBall = false;
             _defaultRenderer.enabled = false;
@@ -158,10 +168,11 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(MorphBallDelay());
 
         }
-        else if (Input.GetKeyDown(KeyCode.V) && _isInMorphBall == true && _canMorphBall == true)
+        else if (Input.GetKeyDown(KeyCode.V) && _isInMorphBall == true && _canMorphBall == true && _canStandUp == true)
         {
             capsuleCollider.enabled = true;
             circleCollider.enabled = false;
+            _ceilingChecker.enabled = false;
             _isInMorphBall = false;
             _canMorphBall = false;
             _defaultRenderer.enabled = true;
@@ -222,5 +233,18 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _canMorphBall = true;
     }
+   public void ceilingcheck()
+    {
+        {
+            Debug.Log("Can't Stand");
+            _canStandUp = false;
+            StartCoroutine(CanStandAgain());
+        }
+    }
 
+    IEnumerator CanStandAgain()
+    {
+        yield return new WaitForSeconds(2f);
+        _canStandUp = true;
+    }
 }

@@ -20,6 +20,8 @@ public class MorphBall : MonoBehaviour
     public GameObject _CinemachineCamera1;
     public GameObject _CinemachineCamera2;
     private Transform _playerLocation;
+    public CapsuleCollider2D _ceilingChecker;
+    public bool _canStandUp = true;
 
 
 
@@ -85,5 +87,13 @@ public class MorphBall : MonoBehaviour
             this.enabled = false;
         }
     }
- 
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider)
+        {
+            _canStandUp = false;
+        }
+    }
+
 }
