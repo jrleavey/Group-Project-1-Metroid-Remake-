@@ -238,13 +238,11 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Can't Stand");
             _canStandUp = false;
-            StartCoroutine(CanStandAgain());
         }
     }
 
-    IEnumerator CanStandAgain()
+    public void ceilingcheckdone()
     {
-        yield return new WaitForSeconds(2f);
         _canStandUp = true;
     }
 }

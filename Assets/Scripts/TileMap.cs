@@ -26,4 +26,12 @@ public class TileMap : MonoBehaviour
             _player.GetComponent<PlayerController>().ceilingcheck();
         }
     }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "CeilingChecker")
+        {
+            Debug.Log("CeilingCheckDone");
+            _player.GetComponent<PlayerController>().ceilingcheckdone();
+        }
+    }
 }
