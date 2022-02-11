@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grapple : MonoBehaviour
+public class SelfDestruct : MonoBehaviour
 {
-    public GameObject _grappleLock;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Destroy(transform.parent.gameObject, 2f);
     }
 
     // Update is called once per frame

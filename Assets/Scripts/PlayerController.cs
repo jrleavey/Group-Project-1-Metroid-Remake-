@@ -19,10 +19,13 @@ public class PlayerController : MonoBehaviour
     private float _movementDirection;
     public GameObject _projectileprefab;
     public GameObject _missilePrefab;
+    public GameObject _grapplePrefab;
+    public GameObject _mbBombPrefab;
     public Transform projectilePosition;
+    public Transform grapplePosition;
     private bool _facingright = true;
     private bool _canJump = true;
-    private bool _canGrapple = true;
+    public bool _canGrapple = true;
     public float _currentHealth = 99f;
     public float _maxHealth = 99f;
     public bool _hasPickedUpGrapple = false;
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
 
         MorphBall();
         Swap();
+        Grapple();
         _morphBall.transform.position = this.transform.position;
 
     }
@@ -117,20 +121,23 @@ public class PlayerController : MonoBehaviour
     }
     void Shoot()
     {
-        if(Input.GetKeyDown(KeyCode.F) && _isMissileActive == false)
+        if (Input.GetKeyDown(KeyCode.F) && _isMissileActive == false && _isInMorphBall == false)
         {
             AudioSource.PlayClipAtPoint(_shootProjectile, transform.position);
             Instantiate(_projectileprefab, projectilePosition.position, projectilePosition.rotation);
-            
+
         }
-        else if (Input.GetKeyDown(KeyCode.F) && _isMissileActive == true && _missileCount > 0)
+        else if (Input.GetKeyDown(KeyCode.F) && _isMissileActive == true && _missileCount > 0 && _isInMorphBall == false)
         {
             AudioSource.PlayClipAtPoint(_shootMissile, transform.position);
             Instantiate(_missilePrefab, projectilePosition.position, projectilePosition.rotation);
             _missileCount -= 1;
-
         }
+        if (Input.GetKeyDown(KeyCode.F) && _isInMorphBall == true)
+        {
+            Instantiate(_mbBombPrefab, projectilePosition.position, projectilePosition.rotation);
         }
+    }
     void Swap()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && _isMissileActive == false)
@@ -148,10 +155,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G) && _canGrapple == true && _hasPickedUpGrapple == true)
         {
-            // fire grapple thing
+            Instantiate(_grapplePrefab, grapplePosition.position, Quaternion.identity, this.transform);
             _canGrapple = false;
             StartCoroutine(grappleTimer());
-
         }
     }
     void MorphBall()
