@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: EvilRock
+  m_Name: evil_rock
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: a831ccb6a9d7026458812620f25892d9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7adfe62dc88c2ff4c9d6a0610a432c99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
