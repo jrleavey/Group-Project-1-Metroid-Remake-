@@ -91,6 +91,10 @@ public class PlayerController : MonoBehaviour
         MorphBall();
         Swap();
         Grapple();
+        if (_currentHealth <= 0)
+        {
+            GameOverSequence();
+        }
         _morphBall.transform.position = this.transform.position;
 
     }
@@ -153,7 +157,7 @@ public class PlayerController : MonoBehaviour
     }
     void Grapple()
     {
-        if (Input.GetKeyDown(KeyCode.G) && _canGrapple == true && _hasPickedUpGrapple == true)
+        if (Input.GetKeyDown(KeyCode.G) && _canGrapple == true && _hasPickedUpGrapple == true && _isInMorphBall == false)
         {
             Instantiate(_grapplePrefab, grapplePosition.position, Quaternion.identity, this.transform);
             _canGrapple = false;
@@ -250,5 +254,11 @@ public class PlayerController : MonoBehaviour
     public void ceilingcheckdone()
     {
         _canStandUp = true;
+    }
+
+    public void GameOverSequence()
+    {
+        // activate menu
+        //destroy this gameobject
     }
 }
