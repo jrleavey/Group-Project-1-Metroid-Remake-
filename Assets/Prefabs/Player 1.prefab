@@ -349,10 +349,11 @@ MonoBehaviour:
   _projectileprefab: {fileID: 5989717886065264531, guid: decd83edf0d36c044897bf971f89b7fa, type: 3}
   _missilePrefab: {fileID: 2502956330519442612, guid: ca165a249a93b084984a4260edbcef6c, type: 3}
   _grapplePrefab: {fileID: 3015991959936674952, guid: 75b52e60c33b54d498969845a45993ba, type: 3}
+  _mbBombPrefab: {fileID: 0}
   projectilePosition: {fileID: 8492299262750227187}
   grapplePosition: {fileID: 3115890120725854602}
   _canGrapple: 1
-  _currentHealth: 99
+  _currentHealth: 30
   _maxHealth: 99
   _hasPickedUpGrapple: 1
   _isMissileActive: 0
