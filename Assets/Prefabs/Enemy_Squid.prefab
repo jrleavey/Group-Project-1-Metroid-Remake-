@@ -192,6 +192,7 @@ MonoBehaviour:
   _wallChecker: {fileID: 4223085985214845595}
   _health: 30
   _enemyDamage: {fileID: 8300000, guid: 0bdbbfe4ff5a7614e8215aae849ea01c, type: 3}
+  enemyparticle: {fileID: 8380025421001953546, guid: f41c44c208706134a8ce45898f7ee3d8, type: 3}
 --- !u!50 &629458195
 Rigidbody2D:
   serializedVersion: 4

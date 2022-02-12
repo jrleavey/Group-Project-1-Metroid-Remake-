@@ -16,6 +16,7 @@ public class EnemyPatrol : MonoBehaviour
     public Collider2D _wallChecker;
     public float _health = 30;
     public AudioClip _enemyDamage;
+    public GameObject enemyparticle;
     
     private void Awake()
     {
@@ -70,6 +71,7 @@ public class EnemyPatrol : MonoBehaviour
     {
         Instantiate(_healthDrop, transform.position, Quaternion.identity);
         Instantiate(_missileDrop, transform.position, Quaternion.identity);
+        Instantiate(enemyparticle, transform.position, Quaternion.identity);
 
     }
 

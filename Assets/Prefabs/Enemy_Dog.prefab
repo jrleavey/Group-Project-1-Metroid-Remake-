@@ -108,6 +108,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _wallChecker: {fileID: 6067578444136895399}
+  _health: 30
+  _enemyDamage: {fileID: 8300000, guid: 0bdbbfe4ff5a7614e8215aae849ea01c, type: 3}
+  enemyparticle: {fileID: 8380025421001953546, guid: f41c44c208706134a8ce45898f7ee3d8, type: 3}
 --- !u!50 &7975650805337637935
 Rigidbody2D:
   serializedVersion: 4
