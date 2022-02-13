@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject _grappleLock1;
     public GameObject _hiddenPlatform1;
+    public GameObject _grappleLock2;
+    public GameObject _hiddenPlatform2;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,11 @@ public class GameManager : MonoBehaviour
         if (_grappleLock1.GetComponent<GrappleLock>()._hasBeenUnlocked == true)
         {
             _hiddenPlatform1.SetActive(true);
+        }
+
+        if (_grappleLock2.GetComponent<GrappleLock>()._hasBeenUnlocked == true)
+        {
+            _hiddenPlatform2.SetActive(true);
         }
     }
 }
