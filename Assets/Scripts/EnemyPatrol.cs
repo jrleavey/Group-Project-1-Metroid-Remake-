@@ -20,7 +20,7 @@ public class EnemyPatrol : MonoBehaviour
     
     private void Awake()
     {
-        _player = GameObject.FindWithTag("Player");
+        _player = GameObject.FindWithTag("PlayerCore");
         rb = GetComponent<Rigidbody2D>();
         patrolSpeed = 3f;
     }
@@ -66,13 +66,12 @@ public class EnemyPatrol : MonoBehaviour
     {
         _health -= 30;
     }
-
-    private void OnDestroy()
+    private void Death()
     {
         Instantiate(_healthDrop, transform.position, Quaternion.identity);
         Instantiate(_missileDrop, transform.position, Quaternion.identity);
         Instantiate(enemyparticle, transform.position, Quaternion.identity);
-
+        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -88,7 +87,7 @@ public class EnemyPatrol : MonoBehaviour
 
             if (_health <= 0)
             {
-                Destroy(this.gameObject);
+                Death();
             }
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MorphBallBomb : MonoBehaviour
 {
     public GameObject _explosionPrefab;
+    public AudioClip _explosionSound;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class MorphBallBomb : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         Instantiate(_explosionPrefab, transform.position, transform.rotation);
+        AudioSource.PlayClipAtPoint(_explosionSound, transform.position);
         Destroy(this.gameObject);
            
     }

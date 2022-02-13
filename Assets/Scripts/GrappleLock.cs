@@ -6,6 +6,7 @@ public class GrappleLock : MonoBehaviour
 {
     private CircleCollider2D circleCollider2D;
     public bool _hasBeenUnlocked = false;
+    public AudioClip _keysound;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,7 @@ public class GrappleLock : MonoBehaviour
     {
         if (other.tag == "Grapple")
         {
+            AudioSource.PlayClipAtPoint(_keysound, transform.position);
             _hasBeenUnlocked = true;
         }
     }

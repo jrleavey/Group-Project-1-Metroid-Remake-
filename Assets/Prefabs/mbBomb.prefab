@@ -96,3 +96,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionPrefab: {fileID: 6270519430169265922, guid: 405a85ca79345b44bb5b000f904d78e6, type: 3}
+  _explosionSound: {fileID: 8300000, guid: a1954cb47ecd0e248a47e624cd73dc48, type: 3}

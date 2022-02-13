@@ -9,6 +9,9 @@ TagManager:
   - Attack
   - CeilingChecker
   - Grapple
+  - Win Collider
+  - Background
+  - PlayerCore
   layers:
   - Default
   - TransparentFX

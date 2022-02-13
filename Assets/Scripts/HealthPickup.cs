@@ -5,21 +5,11 @@ using UnityEngine;
 public class HealthPickup : MonoBehaviour
 {
     private GameObject _player;
-    private void Awake()
-    {
-        _player = GameObject.FindWithTag("Player");
-    }
     void Start()
     {
+        _player = GameObject.FindWithTag("PlayerCore");
         StartCoroutine(healthDecayTime());
     }
-
-
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")

@@ -47,19 +47,26 @@ public class PlayerController : MonoBehaviour
     public AudioClip _swapMissiles;
     public AudioClip _shootProjectile;
     public AudioClip _shootMissile;
-    public GameObject _uiManager;
+    public AudioClip _onDeathSound;
+    public AudioClip _onWinSound;
+    public AudioClip _tookdamage;
+    public AudioClip _swapform;
+    public AudioClip _jumpsound;
+    public AudioClip _bombsound;
+    public AudioClip _grapplesound;
     public bool _canStandUp = true;
     private BoxCollider2D _ceilingChecker;
     public GameObject _tileMap;
     private TilemapCollider2D _tileMapCollider;
     public LayerMask _ground;
-
-
-
-
+    public GameObject _loseMenu;
+    public GameObject _winMenu;
+    public GameObject _background2;
+    private bool _isgameover = false;
+    public GameObject _backgroundMusic;
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         rigidbody2dt = transform.GetComponent<Rigidbody2D>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponentInChildren<CapsuleCollider2D>();
@@ -70,14 +77,16 @@ public class PlayerController : MonoBehaviour
         _tileMapCollider = GetComponent<TilemapCollider2D>();
         
     }
-    void Start()
-    {
-
-    }
-
     void Update()
     { 
-        
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
         healthText.text = "" + _currentHealth;
         missileText.text = "MISSILES " + _missileCount;
         
@@ -117,6 +126,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && _canJump == true)
         {
+            AudioSource.PlayClipAtPoint(_jumpsound, transform.position);
+            animator.SetTrigger("Jump");
             float jumpVelocity = 15f;
             rigidbody2d.velocity = new Vector2(0, jumpVelocity);
             _canJump = false;
@@ -139,6 +150,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F) && _isInMorphBall == true)
         {
+            AudioSource.PlayClipAtPoint(_bombsound, transform.position);
             Instantiate(_mbBombPrefab, projectilePosition.position, projectilePosition.rotation);
         }
     }
@@ -159,6 +171,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G) && _canGrapple == true && _hasPickedUpGrapple == true && _isInMorphBall == false)
         {
+            AudioSource.PlayClipAtPoint(_grapplesound, transform.position);
             Instantiate(_grapplePrefab, grapplePosition.position, Quaternion.identity, this.transform);
             _canGrapple = false;
             StartCoroutine(grappleTimer());
@@ -168,7 +181,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.V) && _isInMorphBall == false && _canMorphBall == true)
         {
+            AudioSource.PlayClipAtPoint(_swapform, transform.position);
             circleCollider.enabled = true;
+            StartCoroutine(Delaycollider());
             capsuleCollider.enabled = false;
             _ceilingChecker.enabled = true;
             _isInMorphBall = true;
@@ -180,7 +195,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.V) && _isInMorphBall == true && _canMorphBall == true && _canStandUp == true)
         {
+            AudioSource.PlayClipAtPoint(_swapform, transform.position);
             capsuleCollider.enabled = true;
+            StartCoroutine(Delaycollider());
             circleCollider.enabled = false;
             _ceilingChecker.enabled = false;
             _isInMorphBall = false;
@@ -227,6 +244,7 @@ public class PlayerController : MonoBehaviour
     public void Damage()
     {
         _currentHealth -= 10f;
+        AudioSource.PlayClipAtPoint(_tookdamage, transform.position);
     }
 
     public void pickedUpGrapple()
@@ -258,7 +276,33 @@ public class PlayerController : MonoBehaviour
 
     public void GameOverSequence()
     {
-        // activate menu
-        //destroy this gameobject
+        if (_isgameover == false)
+        {
+            AudioSource.PlayClipAtPoint(_onDeathSound, transform.position);
+            _isgameover = true;
+        }
+        _backgroundMusic.SetActive(false);
+       _loseMenu.SetActive(true);
+        Time.timeScale = 0;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Win Collider")
+        {
+            AudioSource.PlayClipAtPoint(_onWinSound, transform.position);
+            _winMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+        if (other.tag == "Background")
+        {
+            _background2.SetActive(true);
+        }
+    }
+
+    IEnumerator Delaycollider()
+    {
+        yield return new WaitForSeconds(.25f);
     }
 }

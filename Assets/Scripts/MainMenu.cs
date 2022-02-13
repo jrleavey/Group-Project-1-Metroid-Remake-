@@ -6,7 +6,14 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject _pausemenu;
+    public GameObject _loseMenu;
+    public GameObject _winMenu;
     public bool _isPauseMenuOpen = false;
+
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
 
     private void Update()
     {
@@ -25,20 +32,19 @@ public class MainMenu : MonoBehaviour
 
     public void StartButton() 
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene("Lvl 1");
+        Time.timeScale = 1;
     }
 
     public void AboutButton()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene("AboutCredits");
     }
 
     public void Main()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1;
     }
     public void isPaused()
     {
@@ -53,5 +59,4 @@ public class MainMenu : MonoBehaviour
         _pausemenu.SetActive(false);
         Time.timeScale = 1;
     }
-
 }
